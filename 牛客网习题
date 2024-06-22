@@ -1,0 +1,58 @@
+有以下定义: char a; int b; float c; double d;则表达式a*b+d-c值的类型为：
+
+A
+float
+
+B
+int
+
+C
+char
+
+D
+double
+
+正确答案：D
+ C语言不同数据类型进行运算时，会发生数据类型的强制转换，转换标准如下： 
+ 
+  double ←── float 高 
+  ↑  
+  long  
+  ↑ 
+ unsigned  
+  ↑ 
+   int ←── char,short 低  
+   所以最后都会变成double型
+
+
+下述程序有什么问题？
+#include   <string.h>
+#include   <stdio.h> 
+#include   <stdlib.h> 
+void getmemory(char*p)  {    
+    p=(char *) malloc(100);    
+    strcpy(p,"hello world");  
+}  
+int main( ) 
+{    
+    char *str=NULL;    
+    getmemory(str);    
+    printf("%s\n",str);   
+    free(str);    
+    return 0;    
+}
+
+A
+正常输出'hello world"
+B
+错误的操作
+C
+输出"烫烫烫"
+D
+程序崩溃
+正确答案：B 指针指向常量（如char*str=“aaaaa”）和NULL时，不能通过指针修改常量，因为常量本身就是只读的。 
+
+  退一步来讲，getmemory函数中，p一开始跟str指向同一个位置，经过“ p=(char*) malloc(100);”这句话之后p已经指向了动态开辟的空间的首地址，“strcpy(p,"hello world");”操作针对的是动态开辟的空间，而不是str指向的地址空间了，getmemory函数执行完成后p又自动释放了，所以getmemory函数对str指向的地址空间没有实际的操作。
+
+
+  综上可知，str指向的内容未发生变化，故输出NULL。
